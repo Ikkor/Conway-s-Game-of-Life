@@ -19,7 +19,8 @@ public class Panel extends JPanel implements ActionListener, MouseListener, Mous
     int[][] spatial = new int[xwidth][xheight];
     int[][] afterspatial = new int[xwidth][xheight];
     boolean begin = true;
-    boolean clicked = false;
+   int initial = -1;
+   Timer time;
     
     
     public Panel(){
@@ -27,7 +28,10 @@ public class Panel extends JPanel implements ActionListener, MouseListener, Mous
         setBackground(Color.BLACK);
         setLayout(null);
         
-        new Timer(80,this).start();
+        time = new Timer(80,this);
+        time.start();
+        
+        
         addMouseMotionListener(this);
         addMouseListener(this);
         
@@ -35,7 +39,7 @@ public class Panel extends JPanel implements ActionListener, MouseListener, Mous
        }
 public void paintComponent(Graphics g){
     super.paintComponent(g);
-   g.setColor(Color.GRAY);
+   g.setColor(Color.BLACK);
     spacegrid(g);
     spawn(g);
     display(g);
@@ -124,7 +128,7 @@ private void copyspatial(){
 
 public void mouseDragged(MouseEvent e ){
     int x = e.getX()/pixsize;
-    int y = e.getX()/pixsize;
+    int y = e.getY()/pixsize;
     
     if(spatial[x][y]==0){
         afterspatial[x][y] = 1;
@@ -133,6 +137,8 @@ public void mouseDragged(MouseEvent e ){
         afterspatial[x][y]=0;
     }
     
+    repaint();
+    
 }
     
  public void mouseMoved(MouseEvent e){   
@@ -140,30 +146,33 @@ public void mouseDragged(MouseEvent e ){
      
  }
  public void mouseClicked(MouseEvent e){
-     
+   
+    }
+
 
      
- }
- 
+
  public void mousePressed(MouseEvent e){
-         int x = e.getX()/pixsize;
-    int y = e.getX()/pixsize;
+    time.stop();
+    int x = e.getX()/pixsize;
+    int y = e.getY()/pixsize;
     
-    clicked = true;
-    
-    if(spatial[x][y]==0 && clicked){
-        afterspatial[x][y] = 1;
+
+    if(spatial[x][y]==0 ){
+       initial = 1;
     }
-    else if (spatial[x][y]==1 && clicked){
-        afterspatial[x][y]=0;
+    else {
+        initial = 0;
     }
-    
+      repaint();
+  
      
      
  }
  
  public void mouseReleased(MouseEvent e ){
-     clicked = false;
+    time.start();
+     initial = -1;
  }
  
  public void mouseEntered(MouseEvent e){
