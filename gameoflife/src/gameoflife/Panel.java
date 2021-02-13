@@ -12,7 +12,7 @@ public class Panel extends JPanel implements ActionListener, MouseListener, Mous
     
     int width = 1300; 
     int height = 700;
-    int pixsize = 10;
+    int pixsize = 6;
     
     int xwidth = width/pixsize;
     int xheight = height/pixsize;
@@ -73,9 +73,14 @@ private void display(Graphics g){
     
      for(int i = 0;i<xwidth;i++){
              for(int k =0;k<xheight;k++){
-                 if(spatial[i][k]==1)
+                    int R = (int) (Math.random( )*170);
+                    int G =250;
+                    int B= (int)(Math.random( )*170);
+                   Color randomColor = new Color(R, G, B);
+                 if(spatial[i][k]==1){
+                 g.setColor(randomColor);
                  g.fillRect(i*pixsize,k*pixsize,pixsize,pixsize);
-                 
+                 }
                 }
              }
         }
@@ -108,6 +113,7 @@ public void actionPerformed(ActionEvent e){
                   afterspatial[i][k]=1;
                   }
                   else if  ((living ==2) && spatial[i][k]==1){
+                      
                       afterspatial[i][k]=1;
                 }
                   else{
