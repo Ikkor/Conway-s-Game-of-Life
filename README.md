@@ -2,5 +2,5 @@
 the famous cellular automaton game implemented in java swing
 
 
-![preview](https://imgur.com/okJiFwZ)
+![preview](2021-03-23 20-25-08.gif)
 
